@@ -35,13 +35,6 @@ void SeedState(unsigned long long time)
         s_high_32 |= ((s_high_32_tmp>>i)&1)<<pos[i];
     }
 
-    // printBits((unsigned long long)time, 48);
-    // printBits((unsigned long long)t_low_32, 32);
-    // printBits((unsigned long long)t_high_16, 16);
-    
-    // printBits((unsigned long long)s_low_16, 16);
-    // printBits((unsigned long long)s_high_32, 32);
-
     state = (unsigned long long)s_high_32 << 16 | s_low_16;
 
 }
@@ -65,10 +58,6 @@ double RandomNext()
 
     double result = (double)rndInt/(double)(1ull<<54);
 
-    // printBits((unsigned long long)s1, 27);
-    // printBits((unsigned long long)s2, 27);
-    // printBits((unsigned long long)rndInt, 54);
-
     return result;
 }
 
@@ -84,23 +73,9 @@ void PrintNext256HexRandByte()
 }
 
 int main(int argc, char const *argv[])
-{
-    if (sizeof(unsigned long long)*8 != 64 || sizeof(unsigned int)*8 != 32 || sizeof(short)*8 != 16)
-    {
-        printf("Wrong datatype size\n");
-        printf("Unsigned long long size: %ld bits\n", sizeof(unsigned long long)*8);
-        printf("Unsigned int size: %ld bits\n", sizeof(unsigned int)*8);
-        printf("Unsigned short size: %ld bits\n", sizeof(unsigned short)*8);
-    }
-    
-    
+{   
     for (unsigned long long i = 0; i < 86400000ull*30*atoi(argv[1]); i++)
     {
-        // if (!(i%86400000))
-        // {
-        //     //printf("Day %lld\n", i/86400000);
-        // }
-        
         SeedState(1262300400000ull+i);
         PrintNext256HexRandByte();
     }
